@@ -1,7 +1,7 @@
 # conftest.py 是 Pytest 的特殊文件，它可以被 Pytest 自动识别，
 # 用于定义全局的夹具（fixture）、钩子函数或插件配置。
 # 该文件中的 fixture 可以被同目录下所有测试文件共享。
-
+import os
 import pytest
 from playwright.sync_api import sync_playwright
 
