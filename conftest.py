@@ -13,11 +13,13 @@ def browser():
     # 使用同步 API 启动 Playwright
     # with 语句确保退出时自动调用 p.stop()
     with sync_playwright() as p:
-        # 启动 Chromium 浏览器，channel="chrome" 表示使用本地系统安装的 Chrome 浏览器
-        # headless=False 表示显示浏览器窗口（有头模式），便于观察调试
-        browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=1000)
-        # yield 将 browser 对象提供给测试函数使用
-        # 执行完所有测试后，代码会回到这里继续执行 yield 后面的清理代码
+        if os.gentenv("CI"):
+           browser = p.chromium.launch(channel="chrome", headless=True)
+                                                    #githubact 用无头模式
+        else:
+           browser = p.chromium.launch(channel="chrome", headless=False, slow_mo=1000)
+                                                    #本地用有头模式，慢动作
+        
         yield browser
         # 关闭浏览器，释放资源
         browser.close()
