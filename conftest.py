@@ -13,7 +13,7 @@ def browser():
     # 使用同步 API 启动 Playwright
     # with 语句确保退出时自动调用 p.stop()
     with sync_playwright() as p:
-        if os.gentenv("CI"):
+        if os.getenv("CI"):
            browser = p.chromium.launch(channel="chrome", headless=True)
                                                     #githubact 用无头模式
         else:
